@@ -1,24 +1,15 @@
 import express from "express";
-import pg from 'pg';
+import { router } from "./api/routes/routes";
 import { AppDataSource } from "./db/AppDataSource";
 
 const app = express();
 
+app.use(express.json());
+
 AppDataSource.getInstance().initializeDataSource()
 .then(msg => console.log(msg));
 
-app.get('/', (req, res) => {
-    const dataSource = AppDataSource.getInstance().getDataSource();
-    const promise = new Promise((resolve, reject) => {
-        dataSource.query('SELECT * FROM hardware_schema.vendors')
-        .then(response => {
-            resolve(response)
-        })
-    })
-    promise.then(data => {
-        res.send(data)
-    })
-})
+app.use('/', router);
 
 app.listen(3000, () => {
     console.log("Server started!");
