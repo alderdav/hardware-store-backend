@@ -7,7 +7,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "tsc",
-    "dev": "node --loader ts-node/esm src/app.ts"
+    "dev": "node --trace-warnings --loader ts-node/esm src/app.ts"
   },
   "keywords": [],
   "author": "",
