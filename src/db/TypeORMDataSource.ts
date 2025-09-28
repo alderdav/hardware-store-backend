@@ -1,6 +1,6 @@
 import { Category } from "../models/entities/Category";
 // import { Inventory } from "../models/entities/Inventory";
-// import { User } from "../models/entities/User";
+import { User } from "../models/entities/User";
 import { DataSource } from "typeorm";
 
 export class TypeORMDataSource {
@@ -28,11 +28,11 @@ export class TypeORMDataSource {
                 port: 5432,
                 database: 'hardware_db',
                 schema: 'hardware_schema',
-                entities: [Category]
+                entities: [Category, User]
             })
             this.dataSource.initialize()
-            .then((response) => {
-                resolve('Datasource initialized with TypeORM!' + response)
+            .then((response) => {               
+                resolve('Datasource initialized with TypeORM!')
             })
             .catch(error => {
                 reject('Error connecting to datasource => ' + error);

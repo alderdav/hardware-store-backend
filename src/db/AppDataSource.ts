@@ -27,7 +27,7 @@ export class AppDataSource {
             });
             this.dataSource.connect()
             .then((res) => {
-                resolve("Connected to datasource! " + res);
+                resolve("Connected to datasource! ");
             }, rejection => {
                 throw new Error(rejection);
             })

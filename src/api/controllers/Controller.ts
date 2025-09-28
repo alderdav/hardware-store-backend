@@ -3,13 +3,18 @@ import { Pool } from "pg";
 import { AppDataSource } from "../../db/AppDataSource";
 import { getInventoryQuery, getSpecificPurchaseDetailsQuery, getPurchasesByUserQuery, insertUser } from "../../db/queries/Queries";
 import { InsertUserBody } from "../../models/http/InsertUserBody";
+import { TypeORMDataSource } from "../../db/TypeORMDataSource";
+import { DataSource } from "typeorm";
+import { Category } from "../../models/entities/Category";
 
 export class Controller {
 
     private dataSource: Pool;
+    private dataSourceORM: DataSource;
 
     constructor() {
         this.dataSource = AppDataSource.getInstance().getDataSource();
+        this.dataSourceORM = TypeORMDataSource.getInstance().getDataSource();
     }
 
     public getVendors(req: Request, res: Response) {
@@ -66,12 +71,8 @@ export class Controller {
 
     public getCategories(req: Request, res: Response) {
         new Promise((resolve, reject) => {
-            this.dataSource.query('SELECT * FROM hardware_schema.categories')
-                .then(response => {
-                    resolve(response['rows']);
-                }, rejection => {
-                    reject("Unable to get categories from database")
-                })
+            const rows = this.dataSourceORM.getRepository(Category).find();
+            resolve(rows);
         })
         .then(data => {
             res.send(data);
