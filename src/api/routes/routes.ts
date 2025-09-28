@@ -38,6 +38,7 @@ router.get('/purchases', (req: Request, res: Response) => {
     controller.getPurchases(req, res);
 });
 
+//There is an issue with duplciate pruchase id's, it has to be how I am inserting into database
 router.get('/users/:id/purchases', (req: Request, res: Response) => {
     const userId: number = Number(req.params.id);
     const controller = new Controller();
